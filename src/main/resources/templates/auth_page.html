@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue Form Example</title>
+</head>
+<body>
+<div id="app">
+<!--    <h2>Registration Form</h2>-->
+<!--    <form @submit.prevent="registerUser">-->
+<!--        <label for="first-name">First Name:</label>-->
+<!--        <input type="text" id="first-name" v-model="name">-->
+
+<!--        <label for="last-name">Last Name:</label>-->
+<!--        <input type="text" id="last-name" v-model="surname">-->
+
+<!--        <label for="email">Email:</label>-->
+<!--        <input type="email" id="email" v-model="email">-->
+
+<!--        <label for="password">Password:</label>-->
+<!--        <input type="password" id="password" v-model="password">-->
+
+<!--        <button type="submit">Register</button>-->
+<!--    </form>-->
+
+    <h2>Login Form</h2>
+    <form @submit.prevent="authenticateUser">
+        <label for="login-email">Email:</label>
+        <input type="email" id="login-email" v-model="email">
+
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" v-model="password">
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<!-- Vue.js library -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Axios library -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Vue.js app -->
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            name: '',
+            surname: '',
+            email: '',
+            password: ''
+        },
+        methods: {
+            // registerUser: function() {
+            //     axios.post('http://localhost:8080/api/auth/register', {
+            //         name: this.name,
+            //         surname: this.surname,
+            //         email: this.email,
+            //         password: this.password
+            //     }).then(function(response) {
+            //         console.log(response.data);
+            //     }).catch(function(error) {
+            //         console.log(error);
+            //     });
+            // },
+            authenticateUser: function() {
+                axios.post('http://localhost:8080/api/auth/login', {
+                    email: this.email,
+                    password: this.password
+                }).then(function(response) {
+                    console.log(response.data);
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

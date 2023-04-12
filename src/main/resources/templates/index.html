@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<div id="app">
+    <h1 v-bind="ska"></h1>
+    <div v-if="seen">
+        <button @click="deleteOneMessage">Delete last message</button>
+    </div>
+    <div v-else="seen">
+        <span>Now days is not exist ahhhaahahha</span>
+    </div>
+    <p>{{message}}</p>
+    <input v-model="message">
+
+       <div v-for="day in days">
+           {{ day.text }}
+       </div>
+        <div>
+            <item-1
+            v-for="day in days"
+            v-bind:todo="day"
+            v-bind:key="day.id"
+            ></item-1>
+        </div>
+
+    <div>{{getLength}}</div> <!-- Вычисляемое свойство -->
+    <div style="font-size: 35px;font-weight: bold;color:darkred;">{{fullName}}</div>
+</div>
+
+<script src="../static/js/main.js"></script>
+</body>
+</html>
