@@ -2,7 +2,7 @@ package kz.kurol.auctionapi.services.intf;
 
 import kz.kurol.auctionapi.models.Item;
 
-public interface BoardService {
+public interface BoardItemService {
     void addItem(long id);
     void removeItem(long boardId,long clientId);
     Item getItem(long id);

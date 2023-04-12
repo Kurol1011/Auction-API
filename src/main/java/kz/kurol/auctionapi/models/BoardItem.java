@@ -6,9 +6,12 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "board")
-public class Board {
+@Table(name = "board_item")
+public class BoardItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -29,19 +32,18 @@ public class Board {
     @PositiveOrZero
     private double finalPrice;
 
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private Client client;
+    @ManyToMany(mappedBy = "boardItems")
+    private List<Client> participants;
 
 
-    public Board() {
+    public BoardItem() {
     }
 
-    public Board(Item item, double startingPrice, double finalPrice, Client client) {
+    public BoardItem( Item item, double startingPrice, double finalPrice, List<Client> participants) {
         this.item = item;
         this.startingPrice = startingPrice;
         this.finalPrice = finalPrice;
-        this.client = client;
+        this.participants = participants;
     }
 
     public long getId() {
@@ -76,11 +78,13 @@ public class Board {
         this.finalPrice = finalPrice;
     }
 
-    public Client getClient() {
-        return client;
+    public List<Client> getParticipants() {
+        return participants;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setParticipants(List<Client> participants) {
+        this.participants = participants;
     }
+
+
 }

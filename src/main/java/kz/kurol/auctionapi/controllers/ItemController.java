@@ -1,8 +1,7 @@
 package kz.kurol.auctionapi.controllers;
 
-import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.models.Item;
-import kz.kurol.auctionapi.services.intf.BoardService;
+import kz.kurol.auctionapi.services.intf.BoardItemService;
 import kz.kurol.auctionapi.services.intf.ClientService;
 import kz.kurol.auctionapi.services.intf.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,13 @@ public class ItemController {
 
     private final ItemService itemService;
     private final ClientService clientService;
-    private final BoardService boardService;
+    private final BoardItemService boardItemService;
 
     @Autowired
-    public ItemController(ItemService itemService, ClientService clientService, BoardService boardService) {
+    public ItemController(ItemService itemService, ClientService clientService, BoardItemService boardItemService) {
         this.itemService = itemService;
         this.clientService = clientService;
-        this.boardService = boardService;
+        this.boardItemService = boardItemService;
     }
 
     @PostMapping("/item/create")

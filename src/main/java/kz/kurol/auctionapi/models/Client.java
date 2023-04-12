@@ -55,6 +55,12 @@ public class Client implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "boarditem_client",
+            joinColumns = {@JoinColumn(name = "client_id")},
+            inverseJoinColumns = {@JoinColumn(name = "boarditem_id")})
+    private List<BoardItem> boardItems;
+
     public Client(){}
 
     public Client(String name, String surname, String email, String password, double balance, List<Item> items) {
