@@ -168,4 +168,12 @@ public class Client implements UserDetails {
     public void setPass(String pass) {
         this.password = pass;
     }
+
+    public List<BoardItem> getBoardItems() {
+        return boardItems;
+    }
+
+    public void setBoardItems(List<BoardItem> boardItems) {
+        this.boardItems = boardItems;
+    }
 }

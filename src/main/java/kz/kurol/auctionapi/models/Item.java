@@ -21,7 +21,7 @@ public class Item {
 
     @Column(name = "description",nullable = false)
     @NotEmpty(message = "description should not be empty")
-    @Size(min = 20,max = 250,message = "description should be between 20 and 250 characters")
+    //@Size(min = 20,max = 250,message = "description should be between 20 and 250 characters")
     private String description;
 
 

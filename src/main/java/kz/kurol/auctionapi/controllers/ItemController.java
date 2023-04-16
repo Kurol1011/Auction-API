@@ -1,5 +1,6 @@
 package kz.kurol.auctionapi.controllers;
 
+import kz.kurol.auctionapi.dto.AuctionItemDTO;
 import kz.kurol.auctionapi.models.Item;
 import kz.kurol.auctionapi.services.intf.BoardItemService;
 import kz.kurol.auctionapi.services.intf.ClientService;
@@ -24,8 +25,8 @@ public class ItemController {
     }
 
     @PostMapping("/item/create")
-    public ResponseEntity<?> createItem(Item item){
-        itemService.saveNewItem(item);
+    public ResponseEntity<?> createItem(@RequestBody AuctionItemDTO auctionItemDTO){
+        boardItemService.convertToBoardItem(auctionItemDTO,clientService.getCurrentClient());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

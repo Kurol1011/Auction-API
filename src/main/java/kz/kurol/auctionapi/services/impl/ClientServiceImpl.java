@@ -5,6 +5,8 @@ import kz.kurol.auctionapi.repositories.ClientRepository;
 import kz.kurol.auctionapi.services.intf.ClientService;
 import kz.kurol.auctionapi.utils.errors.ClientIsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,6 +62,17 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     @Override
     public void save(Client client) {
         clientRepository.save(client);
+    }
+
+    @Override
+    public Client getCurrentClient() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+        Client client = (Client) authentication.getPrincipal();
+
+        return clientRepository.findByEmail(client.getEmail()).orElseThrow(()->new ClientIsNotFoundException("Client not found!"));
     }
 
 

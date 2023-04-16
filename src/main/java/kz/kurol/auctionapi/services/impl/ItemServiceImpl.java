@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void saveNewItem(Item item) {
-        item.setStatus(Status.INACTIVE);
+        //item.setStatus(Status.INACTIVE);
         itemRepository.save(item);
     }
 

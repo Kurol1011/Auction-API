@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,8 @@ public class BoardItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
     @Column(name = "starting_price",nullable = false)
@@ -26,10 +27,9 @@ public class BoardItem {
     @PositiveOrZero
     private double startingPrice;
 
-    @Column(name = "final_price",nullable = false)
+    @Column(name = "final_price")
     @Max(999999999)
-    @Min(value = 5, message = "final Price should be greater than $5")
-    @PositiveOrZero
+    //@PositiveOrZero
     private double finalPrice;
 
     @ManyToMany(mappedBy = "boardItems")

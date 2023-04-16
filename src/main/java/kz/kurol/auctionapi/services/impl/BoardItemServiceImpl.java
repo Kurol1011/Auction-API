@@ -1,5 +1,7 @@
 package kz.kurol.auctionapi.services.impl;
 
+import jakarta.transaction.Transactional;
+import kz.kurol.auctionapi.dto.AuctionItemDTO;
 import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.models.Item;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional()
 public class BoardItemServiceImpl implements BoardItemService {
 
     private final BoardItemRepository boardItemRepository;
@@ -53,5 +56,19 @@ public class BoardItemServiceImpl implements BoardItemService {
     @Override
     public Item getItem(long id) {
          return boardItemRepository.findById(id).orElseThrow(() -> new BoardIsNotFoundException("Board item not found!!")).getItem();
+    }
+
+    @Override
+    public void convertToBoardItem(AuctionItemDTO auctionItemDTO, Client client) {
+        Item item = new Item();
+        item.setStatus(Status.ACTIVE);
+        item.setTitle(auctionItemDTO.getTitle());
+        item.setDescription(auctionItemDTO.getDescription());
+        item.setClient(client);
+        BoardItem boardItem = new BoardItem();
+        boardItem.setItem(item);
+        boardItem.setStartingPrice(auctionItemDTO.getInitialPrice());
+        boardItem.setFinalPrice(auctionItemDTO.getInitialPrice());
+        boardItemRepository.save(boardItem);
     }
 }

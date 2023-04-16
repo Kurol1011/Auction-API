@@ -16,6 +16,7 @@ public interface ClientService {
     // public boolean isEqualPassword(String password, String confirmPassword); // todo should be implemented and uncommented
     // public Client convertToClient(ClientDTO clientDTO); // todo should be implemented and uncommented
     // public ClientDTO convertToClientDTO(Client client); // todo should be implemented and uncommented
+    public Client getCurrentClient();
 
 
 
