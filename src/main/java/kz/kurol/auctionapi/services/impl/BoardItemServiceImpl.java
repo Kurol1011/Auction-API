@@ -2,6 +2,7 @@ package kz.kurol.auctionapi.services.impl;
 
 import jakarta.transaction.Transactional;
 import kz.kurol.auctionapi.dto.AuctionItemDTO;
+import kz.kurol.auctionapi.dto.RateDTO;
 import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.models.Item;
@@ -15,6 +16,10 @@ import kz.kurol.auctionapi.utils.errors.ClientIsNotFoundException;
 import kz.kurol.auctionapi.utils.errors.ItemIsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional()
@@ -59,6 +64,18 @@ public class BoardItemServiceImpl implements BoardItemService {
     }
 
     @Override
+    public List<BoardItem> getItemsById(List<Long> itemsId) {
+        return null;
+    }
+
+    @Override
+    public List<BoardItem> getAllBoardItems() {
+        return boardItemRepository.findAll();
+    }
+
+
+
+    @Override
     public void convertToBoardItem(AuctionItemDTO auctionItemDTO, Client client) {
         Item item = new Item();
         item.setStatus(Status.ACTIVE);
@@ -70,5 +87,35 @@ public class BoardItemServiceImpl implements BoardItemService {
         boardItem.setStartingPrice(auctionItemDTO.getInitialPrice());
         boardItem.setFinalPrice(auctionItemDTO.getInitialPrice());
         boardItemRepository.save(boardItem);
+    }
+
+    @Override
+    public AuctionItemDTO convertToAuctionItemDTO(BoardItem boardItem){
+        AuctionItemDTO auctionItemDTO = new AuctionItemDTO();
+        auctionItemDTO.setId(boardItem.getId());
+        auctionItemDTO.setTitle(boardItem.getItem().getTitle());
+        auctionItemDTO.setDescription(boardItem.getItem().getDescription());
+        auctionItemDTO.setInitialPrice(boardItem.getStartingPrice());
+        auctionItemDTO.setFinalPrice(boardItem.getFinalPrice());
+        return auctionItemDTO;
+    }
+
+    @Override
+    public Optional<BoardItem> getBoardItemById(long id) {
+        return boardItemRepository.findById(id);
+    }
+
+    @Override
+    public void updateFinalPrice(RateDTO rateDTO) {
+        BoardItem boardItem = boardItemRepository.findById(rateDTO.getId()).get();
+        boardItem.setFinalPrice(rateDTO.getRate());
+        boardItemRepository.save(boardItem);
+    }
+
+    @Override
+    public List<BoardItem> getClientBoardItems() {
+        List<Item> getAllItems = itemService.getUserItemsById(clientService.getCurrentClient().getId());
+        List<Item> itemsActive = getAllItems.stream().filter(i -> i.getStatus() == Status.ACTIVE).collect(Collectors.toList());
+        return boardItemRepository.findAllByItem_idIn(itemsActive.stream().map(i -> i.getId()).collect(Collectors.toList()));
     }
 }

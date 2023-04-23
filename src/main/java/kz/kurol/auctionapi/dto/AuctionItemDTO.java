@@ -1,9 +1,12 @@
 package kz.kurol.auctionapi.dto;
 
 public class AuctionItemDTO {
+    private long id;
     private String title;
     private String description;
     private double initialPrice;
+
+    private double finalPrice;
 
     public AuctionItemDTO() {
     }
@@ -36,5 +39,21 @@ public class AuctionItemDTO {
 
     public void setInitialPrice(double initialPrice) {
         this.initialPrice = initialPrice;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public double getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }
