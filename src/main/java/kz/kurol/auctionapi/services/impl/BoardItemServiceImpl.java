@@ -113,6 +113,11 @@ public class BoardItemServiceImpl implements BoardItemService {
     }
 
     @Override
+    public void save(BoardItem boardItem) {
+        boardItemRepository.save(boardItem);
+    }
+
+    @Override
     public List<BoardItem> getClientBoardItems() {
         List<Item> getAllItems = itemService.getUserItemsById(clientService.getCurrentClient().getId());
         List<Item> itemsActive = getAllItems.stream().filter(i -> i.getStatus() == Status.ACTIVE).collect(Collectors.toList());

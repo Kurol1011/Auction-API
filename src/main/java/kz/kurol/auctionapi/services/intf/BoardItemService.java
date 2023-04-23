@@ -26,4 +26,6 @@ public interface BoardItemService {
     Optional<BoardItem> getBoardItemById(long id);
 
     void updateFinalPrice(RateDTO rateDTO);
+
+    void save(BoardItem boardItem);
 }

@@ -1,5 +1,6 @@
 package kz.kurol.auctionapi.services.intf;
 
+import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 
 import java.util.List;
@@ -17,6 +18,10 @@ public interface ClientService {
     // public Client convertToClient(ClientDTO clientDTO); // todo should be implemented and uncommented
     // public ClientDTO convertToClientDTO(Client client); // todo should be implemented and uncommented
     public Client getCurrentClient();
+
+    public boolean hasClientAuctionItemById(long id);
+
+    //public void joinInAuction(long id, BoardItem boardItem);
 
 
 

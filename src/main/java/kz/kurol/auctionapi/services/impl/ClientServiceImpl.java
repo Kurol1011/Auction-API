@@ -1,5 +1,6 @@
 package kz.kurol.auctionapi.services.impl;
 
+import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.repositories.ClientRepository;
 import kz.kurol.auctionapi.services.intf.ClientService;
@@ -75,6 +76,11 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         return clientRepository.findByEmail(client.getEmail()).orElseThrow(()->new ClientIsNotFoundException("Client not found!"));
     }
 
+    @Override
+    public boolean hasClientAuctionItemById(long id) {
+        System.out.println(getCurrentClient().getBoardItems().stream().filter(i -> i.getId() == id).findFirst().isPresent());
+        return getCurrentClient().getBoardItems().stream().filter(i -> i.getId() == id).findFirst().isPresent();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

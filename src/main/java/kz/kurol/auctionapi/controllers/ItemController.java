@@ -3,6 +3,7 @@ package kz.kurol.auctionapi.controllers;
 import kz.kurol.auctionapi.dto.AuctionItemDTO;
 import kz.kurol.auctionapi.dto.RateDTO;
 import kz.kurol.auctionapi.models.BoardItem;
+import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.models.Item;
 import kz.kurol.auctionapi.services.intf.BoardItemService;
 import kz.kurol.auctionapi.services.intf.ClientService;
@@ -72,6 +73,22 @@ public class ItemController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+
+    @GetMapping("/boarditem")
+    public Boolean isClientParticipation(@RequestParam(value = "id",required = true) String id){
+       return clientService.hasClientAuctionItemById(Integer.parseInt(id));
+    }
+
+    @PostMapping("/join-auction")
+    public ResponseEntity<?> joinInAuction(@RequestBody long id) {
+        Client client = clientService.getCurrentClient();
+        BoardItem boardItem = boardItemService.getBoardItemById(id).get();
+        client.getBoardItems().add(boardItem);
+        boardItem.getParticipants().add(client);
+        clientService.save(client);
+        boardItemService.save(boardItem);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
 
 }
