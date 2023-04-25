@@ -28,4 +28,5 @@ public interface BoardItemService {
     void updateFinalPrice(RateDTO rateDTO);
 
     void save(BoardItem boardItem);
+
 }

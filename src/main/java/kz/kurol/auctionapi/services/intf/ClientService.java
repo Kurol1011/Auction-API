@@ -1,5 +1,6 @@
 package kz.kurol.auctionapi.services.intf;
 
+import kz.kurol.auctionapi.dto.ClientDTO;
 import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 
@@ -16,15 +17,12 @@ public interface ClientService {
     public void save(Client client);
     // public boolean isEqualPassword(String password, String confirmPassword); // todo should be implemented and uncommented
     // public Client convertToClient(ClientDTO clientDTO); // todo should be implemented and uncommented
-    // public ClientDTO convertToClientDTO(Client client); // todo should be implemented and uncommented
+     public ClientDTO convertToClientDTO(Client client);
     public Client getCurrentClient();
 
     public boolean hasClientAuctionItemById(long id);
 
     //public void joinInAuction(long id, BoardItem boardItem);
-
-
-
 
 
 }

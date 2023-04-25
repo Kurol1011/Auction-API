@@ -19,7 +19,7 @@ public class Item {
     @Size(min = 2,max = 120, message = "title should be between 2 and 120 characters")
     private String title;
 
-    @Column(name = "description",nullable = false)
+    @Column(name = "description",nullable = false, length = 1200)
     @NotEmpty(message = "description should not be empty")
     //@Size(min = 20,max = 250,message = "description should be between 20 and 250 characters")
     private String description;

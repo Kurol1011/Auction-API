@@ -1,6 +1,7 @@
 package kz.kurol.auctionapi.controllers;
 
 import kz.kurol.auctionapi.dto.AuctionItemDTO;
+import kz.kurol.auctionapi.dto.ClientDTO;
 import kz.kurol.auctionapi.dto.RateDTO;
 import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
@@ -61,6 +62,7 @@ public class ItemController {
     public List<AuctionItemDTO> getClientAuctions(){
         return boardItemService.getClientBoardItems()
                 .stream()
+                .limit(3)
                 .map(item ->
                         boardItemService.convertToAuctionItemDTO(item)
                 )
@@ -90,5 +92,13 @@ public class ItemController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/participants")
+    public List<ClientDTO> getParticipants(@RequestParam(value="id") String id){
+        return boardItemService.getBoardItemById(Integer.parseInt(id)).get()
+                .getParticipants()
+                .stream()
+                .map(c -> clientService.convertToClientDTO(c))
+                .collect(Collectors.toList());
+    }
 
 }

@@ -1,8 +1,10 @@
 package kz.kurol.auctionapi.services.impl;
 
+import kz.kurol.auctionapi.dto.ClientDTO;
 import kz.kurol.auctionapi.models.BoardItem;
 import kz.kurol.auctionapi.models.Client;
 import kz.kurol.auctionapi.repositories.ClientRepository;
+import kz.kurol.auctionapi.services.intf.BoardItemService;
 import kz.kurol.auctionapi.services.intf.ClientService;
 import kz.kurol.auctionapi.utils.errors.ClientIsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,17 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     @Override
     public void save(Client client) {
         clientRepository.save(client);
+    }
+
+    @Override
+    public ClientDTO convertToClientDTO(Client client) {
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setName(client.getName());
+        clientDTO.setSurname(client.getSurname());
+        clientDTO.setEmail(client.getEmail());
+        clientDTO.setPassword(client.getPassword());
+        clientDTO.setBalance(client.getBalance());
+        return clientDTO;
     }
 
     @Override
