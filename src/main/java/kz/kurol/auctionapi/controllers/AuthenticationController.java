@@ -4,7 +4,7 @@ import kz.kurol.auctionapi.security.AuthenticationRequest;
 import kz.kurol.auctionapi.security.AuthenticationResponse;
 import kz.kurol.auctionapi.security.AuthenticationService;
 import kz.kurol.auctionapi.security.RegisterRequest;
-import org.apache.coyote.Response;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+            return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
 

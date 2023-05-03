@@ -9,12 +9,13 @@ import kz.kurol.auctionapi.models.Item;
 import kz.kurol.auctionapi.services.intf.BoardItemService;
 import kz.kurol.auctionapi.services.intf.ClientService;
 import kz.kurol.auctionapi.services.intf.ItemService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,5 +101,6 @@ public class ItemController {
                 .map(c -> clientService.convertToClientDTO(c))
                 .collect(Collectors.toList());
     }
+
 
 }

@@ -1,10 +1,13 @@
 package kz.kurol.auctionapi.security;
 
 import io.jsonwebtoken.Claims;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
+import kz.kurol.auctionapi.utils.errors.JwtTokenHasExpired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -44,13 +47,16 @@ public class JwtService {
                 .compact(); // will generate and return a token
     }
 
-    public boolean isTokenValid(String token, UserDetails clientDetails){
+    public boolean isTokenValid(String token, UserDetails clientDetails) throws JwtTokenHasExpired {
         final String username = extractUsername(token);
-        return (username.equals(clientDetails.getUsername())) && !isTokenExpired(token);
+        if (!((username.equals(clientDetails.getUsername())) && !isTokenExpired(token)))
+            throw new JwtTokenHasExpired("Jwt token is not valid");
+        return true;
     }
 
-    private boolean isTokenExpired(String token) {
+    private boolean isTokenExpired(String token) throws JwtTokenHasExpired {
         return extractExpiration(token).before(new Date());
+
     }
 
     private Date extractExpiration(String token) {
@@ -58,12 +64,12 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey()) // secret key
-                .build()
-                .parseClaimsJws(token)
-                .getBody(); // get all claims from token
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey()) // secret key
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody(); // get all claims from token
     }
 
     private Key getSignInKey() {
